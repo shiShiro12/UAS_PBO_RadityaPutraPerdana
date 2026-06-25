@@ -1,7 +1,7 @@
 <?php
 require_once 'Mahasiswa.php';
 
-class MahasiswaBidikmisi extends Mahasiswa {
+class MahasiswaPrestasi extends Mahasiswa {
     private string $nomorKipKuliah;
     private float $danaSakuSubsidi;
 
