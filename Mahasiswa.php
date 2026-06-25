@@ -19,17 +19,7 @@ abstract class Mahasiswa {
     }
 
     // ==================== ABSTRACT METHODS ====================
-
-    /**
-     * Metode abstrak untuk menghitung total tagihan semester mahasiswa.
-     * Harus diimplementasikan oleh class anak.
-     */
     abstract public function hitungTagihanSemester(): float;
-
-    /**
-     * Metode abstrak untuk menampilkan spesifikasi akademik atau detail data khusus.
-     * Harus diimplementasikan oleh class anak.
-     */
     abstract public function tampilkanSpesifikasiAkademik(): void;
 
     // ==================== GETTER & SETTER ====================
