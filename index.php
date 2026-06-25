@@ -24,7 +24,8 @@ function ambilDataMahasiswa($pdo, $subclassObj, $jenis) {
     $query = $subclassObj->getQuerySelectWhere();
     $stmt = $pdo->query($query);
     
-    while ($row = $stmt->fetch(PDO::ATTR_ASSOC)) {
+    // Perbaikan utama: Menggunakan PDO::FETCH_ASSOC
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if ($jenis === 'Mandiri') {
             $listMahasiswa[] = new MahasiswaMandiri(
                 $row['id_mahasiswa'], $row['nama_mahasiswa'], $row['nim'], 
@@ -34,7 +35,7 @@ function ambilDataMahasiswa($pdo, $subclassObj, $jenis) {
         } elseif ($jenis === 'Bidikmisi') {
             $listMahasiswa[] = new MahasiswaBidikmisi(
                 $row['id_mahasiswa'], $row['nama_mahasiswa'], $row['nim'], 
-                $row['semester'], 0.0, // Bidikmisi default tarif di objek diatur 0 atau dari db
+                $row['semester'], 0.0, 
                 $row['nomor_kip_kuliah'], (float)$row['dana_saku_subsidi']
             );
         } elseif ($jenis === 'Prestasi') {
