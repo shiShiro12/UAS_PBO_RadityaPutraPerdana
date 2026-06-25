@@ -1,24 +1,38 @@
 <?php
 
+// Mendefinisikan abstract class Mahasiswa
 abstract class Mahasiswa {
+    // Properti terenkapsulasi dengan hak akses protected
     protected int $idMahasiswa;
     protected string $namaMahasiswa;
     protected string $nim;
     protected int $semester;
-    protected float $tarifUktNominal; 
+    protected float $tarifUktNominal;
 
+    // Constructor untuk menginisialisasi atribut global (induk)
     public function __construct(int $idMahasiswa, string $namaMahasiswa, string $nim, int $semester, float $tarifUktNominal) {
-        $this->idMahasiswa = idMahasiswa;
+        $this->idMahasiswa = $idMahasiswa;
         $this->namaMahasiswa = $namaMahasiswa;
         $this->nim = $nim;
         $this->semester = $semester;
         $this->tarifUktNominal = $tarifUktNominal;
     }
 
+    // ==================== ABSTRACT METHODS ====================
+
+    /**
+     * Metode abstrak untuk menghitung total tagihan semester mahasiswa.
+     * Harus diimplementasikan oleh class anak.
+     */
     abstract public function hitungTagihanSemester(): float;
 
+    /**
+     * Metode abstrak untuk menampilkan spesifikasi akademik atau detail data khusus.
+     * Harus diimplementasikan oleh class anak.
+     */
     abstract public function tampilkanSpesifikasiAkademik(): void;
 
+    // ==================== GETTER & SETTER ====================
     public function getIdMahasiswa(): int { return $this->idMahasiswa; }
     public function setIdMahasiswa(int $idMahasiswa): void { $this->idMahasiswa = $idMahasiswa; }
 
