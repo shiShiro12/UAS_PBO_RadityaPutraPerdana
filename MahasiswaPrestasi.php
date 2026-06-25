@@ -1,40 +1,33 @@
 <?php
 require_once 'Mahasiswa.php';
 
-class MahasiswaPrestasi extends Mahasiswa {
-    // Properti tambahan spesifik
-    private string $namaInstansiBeasiswa;
-    private float $minimalIpkSyarat;
+class MahasiswaBidikmisi extends Mahasiswa {
+    private string $nomorKipKuliah;
+    private float $danaSakuSubsidi;
 
-    // Constructor subclass
-    public function __construct(int $idMahasiswa, string $namaMahasiswa, string $nim, int $semester, float $tarifUktNominal, string $namaInstansiBeasiswa, float $minimalIpkSyarat) {
+    public function __construct(int $idMahasiswa, string $namaMahasiswa, string $nim, int $semester, float $tarifUktNominal, string $nomorKipKuliah, float $danaSakuSubsidi) {
         parent::__construct($idMahasiswa, $namaMahasiswa, $nim, $semester, $tarifUktNominal);
-        $this->namaInstansiBeasiswa = $namaInstansiBeasiswa;
-        $this->minimalIpkSyarat = $minimalIpkSyarat;
-    }
-
-    // Implementasi method abstrak: Hitung tagihan (Prestasi bayar sesuai sisa tarif pasca potongan instansi jika ada)
-    public function hitungTagihanSemester(): float {
-        return $this->tarifUktNominal; 
-    }
-
-    // Implementasi method abstrak: Tampilkan spesifikasi akademik
-    public function tampilkanSpesifikasiAkademik(): void {
-        echo "Rincian Akademik Mahasiswa Prestasi:<br>";
-        echo "Instansi Pemberi Beasiswa: " . $this->namaInstansiBeasiswa . "<br>";
-        echo "Minimal IPK Syarat: " . number_format($this->minimalIpkSyarat, 2) . "<br>";
+        $this->nomorKipKuliah = $nomorKipKuliah;
+        $this->danaSakuSubsidi = $danaSakuSubsidi;
     }
 
     /**
-     * Method untuk mendapatkan query SELECT-WHERE spesifik Mahasiswa Prestasi
+     * OVERRIDING: Mahasiswa Bidikmisi
+     * Total Tagihan = 0 (Gratis penuh ditanggung negara via KIP-K)
      */
-    public function getQuerySelectWhere(): string {
-        return "SELECT id_mahasiswa, nama_mahasiswa, nim, semester, tarif_ukt_nominal, nama_instansi_beasiswa, minimal_ipk_syarat 
-                FROM table_mahasiswa 
-                WHERE jenis_pembiayaan = 'Prestasi';";
+    public function hitungTagihanSemester(): float {
+        return 0.0;
     }
 
-    // Getter & Setter spesifik
-    public function getNamaInstansiBeasiswa(): string { return $this->namaInstansiBeasiswa; }
-    public function getMinimalIpkSyarat(): float { return $this->minimalIpkSyarat; }
+    public function tampilkanSpesifikasiAkademik(): void {
+        echo "Rincian Akademik Mahasiswa Bidikmisi:<br>";
+        echo "No. KIP Kuliah: " . $this->nomorKipKuliah . "<br>";
+        echo "Dana Saku Subsidi/Bulan: Rp " . number_format($this->danaSakuSubsidi, 0, ',', '.') . "<br>";
+    }
+
+    public function getQuerySelectWhere(): string {
+        return "SELECT id_mahasiswa, nama_mahasiswa, nim, semester, nomor_kip_kuliah, dana_saku_subsidi 
+                FROM table_mahasiswa 
+                WHERE jenis_pembiayaan = 'Bidikmisi';";
+    }
 }
