@@ -11,23 +11,20 @@ class MahasiswaBidikmisi extends Mahasiswa {
         $this->danaSakuSubsidi = $danaSakuSubsidi;
     }
 
-    /**
-     * OVERRIDING: Mahasiswa Bidikmisi
-     * Total Tagihan = 0 (Gratis penuh ditanggung negara via KIP-K)
-     */
+    // Tahap 5 Overriding: Gratis lunas (0)
     public function hitungTagihanSemester(): float {
         return 0.0;
     }
 
     public function tampilkanSpesifikasiAkademik(): void {
-        echo "Rincian Akademik Mahasiswa Bidikmisi:<br>";
         echo "No. KIP Kuliah: " . $this->nomorKipKuliah . "<br>";
-        echo "Dana Saku Subsidi/Bulan: Rp " . number_format($this->danaSakuSubsidi, 0, ',', '.') . "<br>";
+        echo "Dana Saku Subsidi: Rp " . number_format($this->danaSakuSubsidi, 0, ',', '.') . "/bln<br>";
     }
 
     public function getQuerySelectWhere(): string {
-        return "SELECT id_mahasiswa, nama_mahasiswa, nim, semester, nomor_kip_kuliah, dana_saku_subsidi 
-                FROM table_mahasiswa 
-                WHERE jenis_pembiayaan = 'Bidikmisi';";
+        return "SELECT * FROM table_mahasiswa WHERE jenis_pembiayaan = 'Bidikmisi';";
     }
+
+    public function getNomorKipKuliah(): string { return $this->nomorKipKuliah; }
+    public function getDanaSakuSubsidi(): float { return $this->danaSakuSubsidi; }
 }

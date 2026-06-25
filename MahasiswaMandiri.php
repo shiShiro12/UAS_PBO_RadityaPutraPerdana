@@ -11,23 +11,20 @@ class MahasiswaMandiri extends Mahasiswa {
         $this->namaWali = $namaWali;
     }
 
-    /**
-     * OVERRIDING: Mahasiswa Mandiri
-     * Total Tagihan = tarifUktNominal + 100000 (Biaya operasional flat)
-     */
+    // Tahap 5 Overriding: Tambah biaya operasional flat Rp 100.000
     public function hitungTagihanSemester(): float {
         return $this->tarifUktNominal + 100000;
     }
 
     public function tampilkanSpesifikasiAkademik(): void {
-        echo "Rincian Akademik Mahasiswa Mandiri:<br>";
         echo "Nama Wali: " . $this->namaWali . "<br>";
         echo "Golongan UKT: " . $this->golonganUkt . "<br>";
     }
 
     public function getQuerySelectWhere(): string {
-        return "SELECT id_mahasiswa, nama_mahasiswa, nim, semester, tarif_ukt_nominal, golongan_ukt, nama_wali 
-                FROM table_mahasiswa 
-                WHERE jenis_pembiayaan = 'Mandiri';";
+        return "SELECT * FROM table_mahasiswa WHERE jenis_pembiayaan = 'Mandiri';";
     }
+
+    public function getGolonganUkt(): string { return $this->golonganUkt; }
+    public function getNamaWali(): string { return $this->namaWali; }
 }

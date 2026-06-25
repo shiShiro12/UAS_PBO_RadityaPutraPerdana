@@ -2,28 +2,29 @@
 require_once 'Mahasiswa.php';
 
 class MahasiswaPrestasi extends Mahasiswa {
-    private string $nomorKipKuliah;
-    private float $danaSakuSubsidi;
+    private string $namaInstansiBeasiswa;
+    private float $minimalIpkSyarat;
 
-    public function __construct(int $idMahasiswa, string $namaMahasiswa, string $nim, int $semester, float $tarifUktNominal, string $nomorKipKuliah, float $danaSakuSubsidi) {
+    public function __construct(int $idMahasiswa, string $namaMahasiswa, string $nim, int $semester, float $tarifUktNominal, string $namaInstansiBeasiswa, float $minimalIpkSyarat) {
         parent::__construct($idMahasiswa, $namaMahasiswa, $nim, $semester, $tarifUktNominal);
-        $this->nomorKipKuliah = $nomorKipKuliah;
-        $this->danaSakuSubsidi = $danaSakuSubsidi;
+        $this->namaInstansiBeasiswa = $namaInstansiBeasiswa;
+        $this->minimalIpkSyarat = $minimalIpkSyarat;
     }
 
+    // Tahap 5 Overriding: Potongan 75%, bayar 25% saja
     public function hitungTagihanSemester(): float {
-        return 0.0;
+        return $this->tarifUktNominal * 0.25;
     }
 
     public function tampilkanSpesifikasiAkademik(): void {
-        echo "Rincian Akademik Mahasiswa Bidikmisi:<br>";
-        echo "No. KIP Kuliah: " . $this->nomorKipKuliah . "<br>";
-        echo "Dana Saku Subsidi/Bulan: Rp " . number_format($this->danaSakuSubsidi, 0, ',', '.') . "<br>";
+        echo "Instansi Beasiswa: " . $this->namaInstansiBeasiswa . "<br>";
+        echo "Syarat Minimal IPK: " . number_format($this->minimalIpkSyarat, 2) . "<br>";
     }
 
     public function getQuerySelectWhere(): string {
-        return "SELECT id_mahasiswa, nama_mahasiswa, nim, semester, nomor_kip_kuliah, dana_saku_subsidi 
-                FROM table_mahasiswa 
-                WHERE jenis_pembiayaan = 'Bidikmisi';";
+        return "SELECT * FROM table_mahasiswa WHERE jenis_pembiayaan = 'Prestasi';";
     }
+
+    public function getNamaInstansiBeasiswa(): string { return $this->namaInstansiBeasiswa; }
+    public function getMinimalIpkSyarat(): float { return $this->minimalIpkSyarat; }
 }
