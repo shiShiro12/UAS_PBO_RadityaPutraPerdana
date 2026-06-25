@@ -11,10 +11,6 @@ class MahasiswaPrestasi extends Mahasiswa {
         $this->danaSakuSubsidi = $danaSakuSubsidi;
     }
 
-    /**
-     * OVERRIDING: Mahasiswa Bidikmisi
-     * Total Tagihan = 0 (Gratis penuh ditanggung negara via KIP-K)
-     */
     public function hitungTagihanSemester(): float {
         return 0.0;
     }
